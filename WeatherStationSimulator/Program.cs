@@ -11,7 +11,7 @@
 
 
             int[] temperature = new int[days];
-            string[] conditions = { "Solleggiato", "Piovoso", "Nuvoloso"};
+            string[] conditions = { "Solleggiato", "Piovoso", "Nuvoloso" };
             string[] weekDays = { "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato", "domenica" };
             string[] weatherConditions = new string[days];
             Console.WriteLine("Inserisci il giorno corrente");
@@ -29,7 +29,7 @@
             Random random = new Random();
             for (int i = 0; i < days; i++)
             {
-                temperature[i] = random.Next(minTemp, maxTemp+1);
+                temperature[i] = random.Next(minTemp, maxTemp + 1);
                 if (temperature[i] <= 0)
                 {
                     weatherConditions[i] = "Nevoso";
@@ -39,10 +39,12 @@
                     weatherConditions[i] = conditions[random.Next(conditions.Length)];
                 }
 
-                Console.WriteLine($"{CurrentDayCalculator(days, i, currentDay, weekDays)}: {temperature[i]}gradi ed è {weatherConditions[i]}");
+                Console.WriteLine($"{CurrentDayCalculator(days, i, currentDay, weekDays)}: {temperature[i]} gradi ed è {weatherConditions[i]}");
             }
 
-            Console.WriteLine("Temperatura Media di tutti i giorni: " + AverageTempCalculator(temperature) + "gradi");
+            Console.WriteLine($"Temperatura Media di tutti i giorni: {AverageTempCalculator(temperature)} gradi\n" +
+                $"Temperatura minima: {MinTempCalculator(temperature)} gradi\n" +
+                $"Temperatura massima: {MaxTempCalcualtor(temperature)} gradi");
 
             Console.ReadKey();
 
@@ -56,23 +58,48 @@
                 sum += temperature;
             }
             double average = sum / temperatures.Length;
-            
+
             return Math.Round(average, 2);
         }
         static string CurrentDayCalculator(int days, int i, string currentDay, string[] weekDays)
         {
             string day = "";
             int currentDayIndex = 0;
-            for(int j = 0; j < weekDays.Length; j++)
+            for (int j = 0; j < weekDays.Length; j++)
             {
-                if(currentDay == weekDays[j])
+                if (currentDay == weekDays[j])
                 {
                     currentDayIndex = j;
                     break;
                 }
             }
-            int cycleIndex= (currentDayIndex + i) % weekDays.Length;
+            int cycleIndex = (currentDayIndex + i) % weekDays.Length;
             return weekDays[cycleIndex];
+        }
+
+        static int MinTempCalculator(int[] temperatures)
+        {
+            int min = temperatures[0];
+            foreach (int temperature in temperatures)
+            {
+                if (temperature < min)
+                {
+                    min = temperature;
+                }
+            }
+            return min;
+        }
+        static int MaxTempCalcualtor(int[] temperatures)
+        {
+            int max = temperatures[0];
+            foreach (int temperature in temperatures)
+            {
+                if (temperature > max)
+                {
+                    max = temperature;
+                }
+            }
+            return max;
         }
     }
 }
