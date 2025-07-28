@@ -31,18 +31,26 @@
                     weatherConditions[i] = conditions[random.Next(conditions.Length)];
                 }
                 Console.WriteLine(temperature[i]+" " + weatherConditions[i]);
-    
-                averageTemp += temperature[i];
             }
 
-            averageTemp = averageTemp / days;
-            averageTemp = Math.Round(averageTemp, 2);
-            Console.WriteLine("Temperatura Media di tutti i giorni: " + averageTemp + "gradi");
+            Console.WriteLine("Temperatura Media di tutti i giorni: " + AverageTempCalculator(temperature) + "gradi");
 
         
 
             Console.ReadKey();
 
+        }
+
+        static double AverageTempCalculator(int[] temperatures)
+        {
+            int sum = 0;
+            foreach (int temperature in temperatures)
+            {
+                sum += temperature;
+            }
+            double average = sum / temperatures.Length;
+            
+            return Math.Round(average, 2);
         }
     }
 }
