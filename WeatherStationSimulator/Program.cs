@@ -4,17 +4,25 @@
     {
         static int minTemp;
         static int maxTemp;
-        static double averageTemp;
         static void Main(string[] args)
         {
             Console.WriteLine("Inserisci il numero di giorni da simulare");
             int days = int.Parse(Console.ReadLine());
+
+
             int[] temperature = new int[days];
             string[] conditions = { "Solleggiato", "Piovoso", "Nuvoloso"};
-            string[] weekDays = { "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica" };
+            string[] weekDays = { "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato", "domenica" };
             string[] weatherConditions = new string[days];
+            Console.WriteLine("Inserisci il giorno corrente");
+            string currentDay = Console.ReadLine().ToLower();
+
+
+
             Console.WriteLine("Inserisci la temperatura minima possibile");
             minTemp = int.Parse(Console.ReadLine());
+
+
             Console.WriteLine("Inserisci la temperatura massima possibile");
             maxTemp = int.Parse(Console.ReadLine());
 
@@ -30,12 +38,11 @@
                 {
                     weatherConditions[i] = conditions[random.Next(conditions.Length)];
                 }
-                Console.WriteLine(temperature[i]+" " + weatherConditions[i]);
+
+                Console.WriteLine($"{CurrentDayCalculator(days, i, currentDay, weekDays)}: {temperature[i]}gradi ed è {weatherConditions[i]}");
             }
 
             Console.WriteLine("Temperatura Media di tutti i giorni: " + AverageTempCalculator(temperature) + "gradi");
-
-        
 
             Console.ReadKey();
 
@@ -43,7 +50,7 @@
 
         static double AverageTempCalculator(int[] temperatures)
         {
-            int sum = 0;
+            double sum = 0;
             foreach (int temperature in temperatures)
             {
                 sum += temperature;
@@ -51,6 +58,21 @@
             double average = sum / temperatures.Length;
             
             return Math.Round(average, 2);
+        }
+        static string CurrentDayCalculator(int days, int i, string currentDay, string[] weekDays)
+        {
+            string day = "";
+            int currentDayIndex = 0;
+            for(int j = 0; j < weekDays.Length; j++)
+            {
+                if(currentDay == weekDays[j])
+                {
+                    currentDayIndex = j;
+                    break;
+                }
+            }
+            int cycleIndex= (currentDayIndex + i) % weekDays.Length;
+            return weekDays[cycleIndex];
         }
     }
 }
