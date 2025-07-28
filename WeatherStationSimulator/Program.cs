@@ -39,15 +39,15 @@
                     weatherConditions[i] = conditions[random.Next(conditions.Length)];
                 }
 
-                Console.WriteLine($"{CurrentDayCalculator(days, i, currentDay, weekDays)}: {temperature[i]} gradi ed è {weatherConditions[i]}");
+                Console.WriteLine($"{CurrentDayCalculator(days, i, currentDay, weekDays)}: {temperature[i]} gradi ed è {weatherConditions[i]}\n");
             }
 
-            Console.WriteLine($"Temperatura Media di tutti i giorni: {AverageTempCalculator(temperature)} gradi\n" +
+            Console.WriteLine($"\n\nTemperatura Media di tutti i giorni: {AverageTempCalculator(temperature)} gradi\n" +
                 $"Temperatura minima: {MinTempCalculator(temperature)} gradi\n" +
-                $"Temperatura massima: {MaxTempCalcualtor(temperature)} gradi");
+                $"Temperatura massima: {MaxTempCalcualtor(temperature)} gradi\n" +
+                $"La condizione più comune: {MostCommonWeatherCondition(weatherConditions)}");
 
             Console.ReadKey();
-
         }
 
         static double AverageTempCalculator(int[] temperatures)
@@ -63,7 +63,6 @@
         }
         static string CurrentDayCalculator(int days, int i, string currentDay, string[] weekDays)
         {
-            string day = "";
             int currentDayIndex = 0;
             for (int j = 0; j < weekDays.Length; j++)
             {
@@ -100,6 +99,31 @@
                 }
             }
             return max;
+        }
+
+        static string MostCommonWeatherCondition(string[] condition)
+        {
+            int counter = 0;
+            string mostCommon = condition[0];
+            for (int i = 0; i < condition.Length; i++)
+            {
+                int tempCounter = 0;
+                for (int j = 0; j < condition.Length; j++)
+                {
+                    //Verifico quante altre condizioni uguali ci sono
+                    if(condition[j] == condition[i])
+                    {
+                        tempCounter++;
+                    }
+                }
+                if(counter < tempCounter)
+                {
+                    counter = tempCounter;
+                    mostCommon = condition[i];
+                }
+            }
+
+            return mostCommon;
         }
     }
 }
